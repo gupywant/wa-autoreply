@@ -5,8 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import base64
+from webdriver_manager.chrome import ChromeDriverManager
 
-browser = webdriver.Firefox()
+browser = webdriver.Chrome(ChromeDriverManager().install())
 browser.get("https://web.whatsapp.com/")
 input('Press something after scanning ')
 time.sleep(1) #time limit to sign you in on the wa web.
@@ -47,5 +48,12 @@ try:
                 reply.send_keys(Keys.RETURN)
                 time.sleep(2)
                 # break
+                open_menu = browser.find_element(By.XPATH,"//div[@data-testid='conversation-menu-button']")
+                open_menu.click()
+
+                close_chat = browser.find_element(By.XPATH,"//div[@aria-label='Close chat']")
+                close_chat_parent = close_chat.find_element(By.XPATH, "..")
+                close_chat_parent.click()
+                time.sleep(2)
 except KeyboardInterrupt:
     pass
